@@ -30,7 +30,7 @@ public class _RAMPreviewCacher{
 
 	// We use this for drawing and saving our images
 	void draw(){
-		println("Caching preview "+animationFrame+"/"+animationFrameCount+"...");
+		println("Saving RAM Preview cache "+animationFrame+"/"+animationFrameCount+"...");
 		cacheGraphics.beginDraw();
 		cacheGraphics.clear();
 		cacheGraphics.endDraw();

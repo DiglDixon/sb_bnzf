@@ -1,11 +1,13 @@
 
 HashMap<Character, LetterImageSet> IMAGE_SETS = new HashMap<Character, LetterImageSet>();
-char[] CHAR_SET = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+char[] CHAR_SET = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 
 void loadLetterImageSets(FontAnimationStyle style){
 	LetterImageSet newSet;
 	for(int k = 0; k<CHAR_SET.length; k++){
-		IMAGE_SETS.put(CHAR_SET[k], new LetterImageSet(CHAR_SET[k], style));	
+		newSet = new LetterImageSet(CHAR_SET[k], style);
+		IMAGE_SETS.put(CHAR_SET[k], newSet);
+		// newSet.beginLoad(); // This is preloading for whole alphabet. Likely to become cumbersome with all glyphs.
 	}
 }
 

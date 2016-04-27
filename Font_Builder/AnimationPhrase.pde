@@ -5,7 +5,7 @@ public class AnimatedPhrase{
 	String myPhrase;
 	FontAnimationStyle style;
 	AnimatedLetter[] letters;
-	float sc = 0.3;
+	float sc = 1;
 	float tracking = 0;
 	boolean phraseLoaded = false;
 	int displayFrame = 0;
