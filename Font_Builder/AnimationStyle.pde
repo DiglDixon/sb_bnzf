@@ -13,6 +13,8 @@ public class FontAnimationStyle{
 	int letterOriginInImage = 216;
 	int letterBaselineInImage = 388;
 
+	char[] supportedCharacters = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+
 	public FontAnimationStyle(String animationName, String fontName, int matchSize){
 		this.animationName = animationName;
 		this.nativeFontName = fontName;
@@ -32,12 +34,20 @@ public class FontAnimationStyle{
 		}
 	}
 
+	public boolean characterSupported(char c){
+		for(int k = 0;k<supportedCharacters.length; k++){
+			if(supportedCharacters[k]==c)
+				return true;
+		}
+		return false;
+	}
+
 	public String getImagePath(char c){
 		return getImagePath(c, getDefaultDisplayIndex());
 	}
 
 	public String getErrorImagePath(){
-		return getImagePath('d', getDefaultDisplayIndex());
+		return getImagePath('a', getDefaultDisplayIndex());
 	}
 
 	public float getPhraseWidth(String s){

@@ -8,10 +8,14 @@ class _AnimatedLetterFactory{
 	public _AnimatedLetterFactory(){}
 
 	public AnimatedLetter constructAnimatedLetter(char c, FontAnimationStyle style){
+		if(style.characterSupported(c)){
+			return new AnimatedLetter(c, style);
+		}else{
+			return new AnimatedLetter('x', style);
+		}
 		// if(c==' '){
 		// 	return new AnimatedLetterSpace(style);
 		// }
-		return new AnimatedLetter(c, style);
 		// AnimatedLetter existing;
 		// AnimatedLetter al;
 		// if(imageSequenceExists(c, style)){
