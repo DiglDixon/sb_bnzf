@@ -3,11 +3,14 @@
 _Controls Controls = new _Controls();
 
 public class _Controls{
+
+	public boolean controlDown = false;
+	public boolean mouseDown = false;
+
 	public _Controls(){
 		SKETCH.registerMethod("draw", this);
 	}
 
-	boolean mouseDown = false;
 
 	void mousePressed(){
 		mouseDown = true;
@@ -15,6 +18,16 @@ public class _Controls{
 
 	void mouseReleased(){
 		mouseDown = false;
+	}
+
+	void controlPressed(){
+		println("Control down");
+		controlDown = true;
+	}
+
+	void controlReleased(){
+		println("Control up");
+		controlDown = false;
 	}
 
 	void draw(){

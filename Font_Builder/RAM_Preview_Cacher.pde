@@ -5,11 +5,12 @@ public class _RAMPreviewCacher{
 	int animationFrame = 0;
 	int animationFrameCount;
 	AnimatedPhrase phrase;
-	PGraphics previewGraphics;
+	PGraphics cacheGraphics;
+	boolean autoPlay = true;
 
 	public _RAMPreviewCacher(){
 		println(width);
-		previewGraphics = createGraphics(width, height);
+		cacheGraphics = createGraphics(width, height);
 	}
 
 	void cache(AnimatedPhrase ap){
@@ -19,23 +20,24 @@ public class _RAMPreviewCacher{
 		}
 		println("Preview cache begins...");
 		phrase = ap;
-		animationFrameCount = phrase.getPhraseAnimationFrameCount();
 		animationFrame = 0;
+		phrase.resetAnimation();
+		animationFrameCount = phrase.getPhraseAnimationFrameCount();
 		SKETCH.registerMethod("draw", this);
 	}
 
 	// We use this for drawing and saving our images
 	void draw(){
 		println("Caching preview "+animationFrame+"/"+animationFrameCount+"...");
-		previewGraphics.beginDraw();
-		previewGraphics.clear();
-		previewGraphics.endDraw();
-		phrase.setDisplayFrame(animationFrame);
-		phrase.display(previewGraphics);
-		previewGraphics.save(RAM_PREVIEW_PATH+"preview_"+animationFrame+".png");
+		cacheGraphics.beginDraw();
+		cacheGraphics.clear();
+		cacheGraphics.endDraw();
+		phrase.incrementAnimationFrame();
+		phrase.display(cacheGraphics);
+		cacheGraphics.save(RAM_PREVIEW_PATH+"preview_"+animationFrame+".png");
 		//
 		animationFrame ++;
-		UI.displayLoadWheel();
+		UI.displayLoadWheel("Caching RAM Preview...");
 		if(animationFrame==animationFrameCount)
 			completeCache();
 	}
@@ -43,6 +45,9 @@ public class _RAMPreviewCacher{
 	void completeCache(){
 		println("Preview cache complete!");
 		SKETCH.unregisterMethod("draw", this);
+		if(autoPlay)
+			RAMPreviewPlayer.setFrameOutputCount(animationFrameCount);
+			RAMPreviewPlayer.beginCacheLoad();
 	}
 
 }

@@ -3,18 +3,22 @@ public class _RAMPreviewPlayer{
 
 	PImage[] displayImages;
 	int imageIndex = 0;
-	int imageCount = 30;
+	int imageCount;
 	boolean imagesLoaded = false;
 	boolean loadUnderway = false;
 
 	public _RAMPreviewPlayer(){}
 
+	public void updateAndDisplayPreview(PGraphics pg){
+		imageIndex = min(imageIndex+1, imageCount-1);
+		pg.beginDraw();
+		pg.image(displayImages[imageIndex], 0, 0);
+		pg.endDraw();
+	}
 
 	public void runPreview(){
 		if(imagesLoaded){
 			imageIndex = 0;
-		}else{
-			beginLoad();
 		}
 	}
 
@@ -22,9 +26,13 @@ public class _RAMPreviewPlayer{
 
 	}
 
-	private void beginLoad(){
+	public void setFrameOutputCount(int c){
+		imageCount = c;
+	}
+
+	private void beginCacheLoad(){
 		if(loadUnderway){
-			println("Cancelled a beginLoad, as the load is already underway. Avoid these calls please.");
+			println("Cancelled a beginCacheLoad, as the load is already underway. Avoid these calls please.");
 			return;
 		}
 		loadUnderway = true;
@@ -78,12 +86,5 @@ public class _RAMPreviewPlayer{
 
 	public boolean previewReady(){
 		return imagesLoaded;
-	}
-
-	public void updateAndDisplayPreview(PGraphics pg){
-		imageIndex = min(imageIndex+1, imageCount-1);
-		pg.beginDraw();
-		pg.image(displayImages[imageIndex], 0, 0);
-		pg.endDraw();
 	}
 }

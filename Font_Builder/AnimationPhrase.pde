@@ -5,7 +5,7 @@ public class AnimatedPhrase{
 	String myPhrase;
 	FontAnimationStyle style;
 	AnimatedLetter[] letters;
-	float sc = 1;
+	float sc = 0.3;
 	float tracking = 0;
 	boolean phraseLoaded = false;
 	int displayFrame = 0;
@@ -23,7 +23,8 @@ public class AnimatedPhrase{
 		}
 		updateLetterPositions();
 		setStagger(-2);
-		loadPhrase();
+		if(phrase.length()>0)
+			loadPhrase();
 	}
 
 	public void updateLetterPositions(){
@@ -120,9 +121,6 @@ public class AnimatedPhrase{
 
 	private void loadPhrase(){
 		phraseLoaded = false;
-		for(int k = 0; k<letters.length; k++){
-			letters[k].cacheAnimationImages();
-		}
 		SKETCH.registerMethod("draw", this);
 	}
 
@@ -131,34 +129,27 @@ public class AnimatedPhrase{
 		boolean loaded = true;
 		int state = 0;
 		for(int k = 0; k<letters.length; k++){
-			state = letters[k].cachedImageLoadState();
-			// error
-			if(state==-1){
-				loadFailed();
-			}
-			// incomplete
-			if(state==0){
+			if(!letters[k].letterImagesLoaded()){
+				if(!letters[k].letterImagesLoading()){
+					letters[k].forceImagesLoad();
+				}
 				loaded = false;
 			}
 		}
-		if(loaded)
-			loadComplete();
 		UI.displayLoadWheel();
-	}
-
-	public boolean readyForPreviewCaching(){
-		return phraseLoaded;
-	}
-
-	private void loadFailed(){
-		println("ERROR: Load failed unexpectedly!");
-		phraseLoaded = false;
-		SKETCH.unregisterMethod("draw", this);		
+		if(loaded){
+			loadComplete();
+		}
 	}
 
 	private void loadComplete(){
 		phraseLoaded = true;
 		SKETCH.unregisterMethod("draw", this);
+		RAMPreviewCacher.cache(this);
+	}
+
+	public boolean readyForPreviewCaching(){
+		return phraseLoaded;
 	}
 }
 

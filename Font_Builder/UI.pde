@@ -38,8 +38,21 @@ void displayUI(){
 class _UI{
 	public _UI(){}
 
-	public void displayLoadWheel(){
+	public void displayLoadWheel(String s){
+		noStroke();
 		fill(255, 150, 150);
 		ellipse(50+cos(frameCount*0.1)*10, 50+sin(frameCount*0.1)*10, 10, 10);
+		fill(0);
+		text(s, 70, 60);
+	}
+
+	public void displayLoadWheel(){
+		displayLoadWheel("");
 	}
 }
+
+
+
+
+
+//

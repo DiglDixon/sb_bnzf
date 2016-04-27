@@ -1,9 +1,4 @@
 /*
-To do:
-- basic working
-- tracking
-- kerning
-- staggering
 
 - preview mode + live controls
 	- kerning
@@ -50,6 +45,7 @@ void setup(){
 	exportGraphics = createGraphics(width, height);
 	popStyle = new FontAnimationStyle("Pop", "SerranoPro-Light", 260);
 	bounceStyle = new FontAnimationStyle("Bounce", "SerranoPro-Light", 260);
+    loadLetterImageSets(bounceStyle);
     cPhrase = new AnimatedPhrase("", bounceStyle);
     previewWindow = new PreviewWindow(new Bounds(20, 20, 1280*0.8, 720*0.8));
     // CP5 setup
@@ -64,14 +60,15 @@ void draw(){
     previewWindow.drawBorder();
 
 	if(RAMPreviewPlayer.previewReady()){
-		RAMPreviewPlayer.updateAndDisplayPreview(exportGraphics);
+		RAMPreviewPlayer.updateAndDisplayPreview(previewWindow.canvas);
 	}else{
-        if(cPhrase.animationComplete()){
-            cPhrase.resetAnimation();
-        }
-		displayIndex = (displayIndex+1) % 30;
-        cPhrase.display(previewWindow.canvas);
-        cPhrase.incrementAnimationFrame();
+        // THIS IS INCREMENTING THE cPHRASE EVEN WHILE IT'S EXPORTING. TIDY UP!
+  //       if(cPhrase.animationComplete()){
+  //           cPhrase.resetAnimation();
+  //       }
+		// displayIndex = (displayIndex+1) % 30;
+  //       cPhrase.display(previewWindow.canvas);
+  //       cPhrase.incrementAnimationFrame();
 	}
 
     previewWindow.pushTransform();
@@ -111,17 +108,47 @@ void keyPressed() {
         	displayIndex = 0;
         break;
         case 'c':
-        	RAMPreviewCacher.cache(cPhrase);
+            if(Controls.controlDown){
+                println("CTRL+C");
+            	RAMPreviewCacher.cache(cPhrase);
+            }
         break;
         case 'p':
-        	RAMPreviewPlayer.runPreview();
+            if(Controls.controlDown)
+            	RAMPreviewPlayer.runPreview();
         break;
         case 'a':
-        	RAMPreviewPlayer.abortLoad();
+            if(Controls.controlDown)
+            	RAMPreviewPlayer.abortLoad();
         	break;
+        case '`':
+            Controls.controlPressed();
+        break;
+        // case CODED:
+        //     switch(keyCode){
+        //         case CONTROL:
+        //             Controls.controlPressed();
+        //         break;
+        //     }
+        //     break;
         default:
         //unknown key
         break;
+    }
+}
+
+void keyReleased(){
+    switch(key){
+        case '`':
+            Controls.controlReleased();
+        break;
+        // case CODED:
+        //     switch(keyCode){
+        //         case CONTROL:
+        //             Controls.controlReleased();
+        //         break;
+        //     }
+        //     break;
     }
 }
 

@@ -8,35 +8,39 @@ class _AnimatedLetterFactory{
 	public _AnimatedLetterFactory(){}
 
 	public AnimatedLetter constructAnimatedLetter(char c, FontAnimationStyle style){
-		AnimatedLetter existing;
-		AnimatedLetter al;
-		if(imageSequenceExists(c, style)){
-			existing = existingMatchingLetter(c);
-			if(existing!=null){
-				return new AnimatedLetterDuplicate(existing);
-			}else{
-				al = new AnimatedLetter(c, style);
-				constructedLetters.add(al);
-				return al;
-			}
-		}else{
-			return new AnimatedLetterSpace(style);
-		}
+		// if(c==' '){
+		// 	return new AnimatedLetterSpace(style);
+		// }
+		return new AnimatedLetter(c, style);
+		// AnimatedLetter existing;
+		// AnimatedLetter al;
+		// if(imageSequenceExists(c, style)){
+		// 	existing = existingMatchingLetter(c);
+		// 	if(existing!=null){
+		// 		return new AnimatedLetterDuplicate(existing);
+		// 	}else{
+		// 		al = new AnimatedLetter(c, style);
+		// 		constructedLetters.add(al);
+		// 		return al;
+		// 	}
+		// }else{
+		// 	return new AnimatedLetterSpace(style);
+		// }
 	}
 
-	private AnimatedLetter existingMatchingLetter(char c){
-		AnimatedLetter al;
-		for(int k = 0; k<constructedLetters.size(); k++){
-			al = (AnimatedLetter) constructedLetters.get(k);
-			if(al.myValue==c)
-				return al;
-		}
-		return null;
-	}
+	// private AnimatedLetter existingMatchingLetter(char c){
+	// 	AnimatedLetter al;
+	// 	for(int k = 0; k<constructedLetters.size(); k++){
+	// 		al = (AnimatedLetter) constructedLetters.get(k);
+	// 		if(al.myValue==c)
+	// 			return al;
+	// 	}
+	// 	return null;
+	// }
 
-	private boolean imageSequenceExists(char v, FontAnimationStyle style){
-		String filePath = style.getImagePath(v);
-		File f = new File(dataPath(filePath));
-		return f.exists();
-	}
+	// private boolean imageSequenceExists(char v, FontAnimationStyle style){
+	// 	String filePath = style.getImagePath(v);
+	// 	File f = new File(dataPath(filePath));
+	// 	return f.exists();
+	// }
 }
