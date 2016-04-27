@@ -6,6 +6,7 @@ public class _RAMPreviewCacher{
 	int animationFrameCount;
 	AnimatedPhrase phrase;
 	PGraphics cacheGraphics;
+	boolean underway;
 	boolean autoPlay = true;
 
 	public _RAMPreviewCacher(){
@@ -23,6 +24,7 @@ public class _RAMPreviewCacher{
 		animationFrame = 0;
 		phrase.resetAnimation();
 		animationFrameCount = phrase.getPhraseAnimationFrameCount();
+		underway = true;
 		SKETCH.registerMethod("draw", this);
 	}
 
@@ -43,11 +45,13 @@ public class _RAMPreviewCacher{
 	}
 
 	void completeCache(){
+		underway = false;
 		println("Preview cache complete!");
 		SKETCH.unregisterMethod("draw", this);
-		if(autoPlay)
+		if(autoPlay){
 			RAMPreviewPlayer.setFrameOutputCount(animationFrameCount);
 			RAMPreviewPlayer.beginCacheLoad();
+		}
 	}
 
 }

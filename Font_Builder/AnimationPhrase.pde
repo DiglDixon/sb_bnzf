@@ -145,7 +145,7 @@ public class AnimatedPhrase{
 	private void loadComplete(){
 		phraseLoaded = true;
 		SKETCH.unregisterMethod("draw", this);
-		RAMPreviewCacher.cache(this);
+		// RAMPreviewCacher.cache(this);
 	}
 
 	public boolean readyForPreviewCaching(){

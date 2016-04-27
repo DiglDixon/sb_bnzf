@@ -15,6 +15,7 @@ Thoughts:
 */
 
 import controlP5.*;
+import java.util.Map;
 
 PFont defaultFont;
 
@@ -63,12 +64,14 @@ void draw(){
 		RAMPreviewPlayer.updateAndDisplayPreview(previewWindow.canvas);
 	}else{
         // THIS IS INCREMENTING THE cPHRASE EVEN WHILE IT'S EXPORTING. TIDY UP!
-  //       if(cPhrase.animationComplete()){
-  //           cPhrase.resetAnimation();
-  //       }
-		// displayIndex = (displayIndex+1) % 30;
-  //       cPhrase.display(previewWindow.canvas);
-  //       cPhrase.incrementAnimationFrame();
+        if(!RAMPreviewCacher.underway){
+            if(cPhrase.animationComplete()){
+                cPhrase.resetAnimation();
+            }
+    		displayIndex = (displayIndex+1) % 30;
+            cPhrase.display(previewWindow.canvas);
+            cPhrase.incrementAnimationFrame();
+        }
 	}
 
     previewWindow.pushTransform();
@@ -109,8 +112,12 @@ void keyPressed() {
         break;
         case 'c':
             if(Controls.controlDown){
-                println("CTRL+C");
             	RAMPreviewCacher.cache(cPhrase);
+            }
+            break;
+        case 'd':
+            if(Controls.controlDown){
+                unloadLetterImageSets();
             }
         break;
         case 'p':

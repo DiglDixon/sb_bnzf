@@ -62,7 +62,7 @@ public class _RAMPreviewPlayer{
 		}
 		if(loaded)
 			loadComplete();
-		UI.displayLoadWheel();
+		UI.displayLoadWheel("Loading RAM preview images");
 	}
 
 	private void loadFailed(){

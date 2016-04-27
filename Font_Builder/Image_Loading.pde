@@ -9,6 +9,15 @@ void loadLetterImageSets(FontAnimationStyle style){
 	}
 }
 
+void unloadLetterImageSets(){
+	LetterImageSet set;
+	println("Unloading image sets");
+	for (Map.Entry entry : IMAGE_SETS.entrySet()) {
+		set = (LetterImageSet) entry.getValue();
+		set.unload();
+	}
+}
+
 
 
 public class LetterImageSet{
@@ -89,6 +98,13 @@ public class LetterImageSet{
 		loaded = true;
 		underway = false;
 		SKETCH.unregisterMethod("draw", this);
+	}
+
+	public void unload(){
+		loaded = false;
+		underway = false;
+		error = false;
+		cachedImages = null;
 	}
 
 	public PImage getFrame(int f){
